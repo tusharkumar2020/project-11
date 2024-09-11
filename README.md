@@ -1,1 +1,3 @@
-# Repository for final project
+# Repository for final project "Emotion Detector"
+
+![screeshot](screenshot.png)
