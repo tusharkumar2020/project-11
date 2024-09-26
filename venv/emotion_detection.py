@@ -13,10 +13,11 @@ def emotion_detector(text_to_analyze):
     }
 
     response = requests.post(url, json=input_json, headers=headers)
-    print(response.json().get('emotionprediction', {}).get('emotionmentions', {}).get('text', ''))
-    l = response.json().get('emotionPredictions', None);
-    emotion_mention = l[0]['emotionMentions'][0]['span']['text']
-
+    # print(response.json().get('emotionprediction', {}).get('emotionmentions', {}).get('text', ''))
+    emotion_list = response.json().get('emotionPredictions', None)
+    emotion_mention = emotion_list[0]['emotionMentions'][0]['emotion']
+    max_score = max(emotion_mention.values())
+    emotion_mention['dominant_emotion'] = max_score
     if response.status_code == 200:
         return emotion_mention
     else:
