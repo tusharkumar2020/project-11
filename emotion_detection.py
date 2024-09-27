@@ -33,3 +33,4 @@ def emotion_detector(text_to_analyse):
         'dominant_emotion': dominant_emotion_key
     }
     return result
+
