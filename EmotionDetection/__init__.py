@@ -1,0 +1,1 @@
+from .emotion_detection import sentiment_analysis
