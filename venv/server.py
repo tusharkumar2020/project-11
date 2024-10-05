@@ -7,6 +7,7 @@ from EmotionDetection.emotion_detection import emotion_detector
 
 app = Flask(__name__)
 
+
 @app.route("/emotionDetector")
 def get_emotion_detected():
     """
@@ -42,6 +43,7 @@ def get_emotion_detected():
     )
 
     return jsonify({"message": response_message})
+
 
 if __name__ == "__main__":
     app.run(port=5000, debug=True)
