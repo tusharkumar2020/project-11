@@ -15,6 +15,8 @@ def emotion_detection():
         f"'{key}': {value}" for key, value in response.items())
     response_arr = response_str.split(", 'dominant_emotion':")
     response_str = "For the given statement, the system response is " + response_arr[0] + ". The dominant emotion is <b>" + response_arr[1]+"</b>."
+    if response['anger'] is None:
+        return "Invalid input! Try again."
     return response_str
 
 if __name__ == '__main__':
