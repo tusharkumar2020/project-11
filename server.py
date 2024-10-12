@@ -11,8 +11,11 @@ def index():
 def emotion_detection():
     text_to_analyze = str(request.args.get('textToAnalyze'))
     response = emotion_detector(text_to_analyze)
-    
-    return "For the given statement, the system response is {}".format(response)
+    response_str = ", ".join(
+        f"'{key}': {value}" for key, value in response.items())
+    response_arr = response_str.split(", 'dominant_emotion':")
+    response_str = "For the given statement, the system response is " + response_arr[0] + ". The dominant emotion is <b>" + response_arr[1]+"</b>."
+    return response_str
 
 if __name__ == '__main__':
     app.run(debug=True)
