@@ -6,15 +6,18 @@ def emotion_detector(text_to_analyse):
     response = requests.post(url = URL, json = myobj, headers = Headers)
 
     formatted_response = json.loads(response.text)
-
-    set_of_emotions = formatted_response['emotionPredictions'][0]['emotion']
-
-    for emo, value in set_of_emotions.items():
-        if max(set_of_emotions.values()) == value:
-           dominant_emotion = emo
-    set_of_emotions['dominant_emotion'] = dominant_emotion
     
-    return set_of_emotions   
+    if response.status_code == 200:
+        set_of_emotions = formatted_response['emotionPredictions'][0]['emotion']
+        for emo, value in set_of_emotions.items():
+            if max(set_of_emotions.values()) == value:
+                dominant_emotion = emo
+        set_of_emotions['dominant_emotion'] = dominant_emotion
+        return set_of_emotions
 
+    elif response.status_code == 400:
+        print("No whitespaces allowed")
+        return {'anger': None, 'disgust': None, 'fear': None,
+                'joy': None, 'sadness': None,'dominant_emotion': None}
 
                 
