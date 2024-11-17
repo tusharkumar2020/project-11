@@ -10,8 +10,7 @@ def self_detection():
     if response['dominant_emotion'] is None:
         return "Invalid text! Please try again!"
     else :
-        return f"For the given statement, the system response is {response}. 
-        The dominant emotion is {response['dominant_emotion']}"
+        return f"For the given statement, the system response is {response}.The dominant emotion is {response['dominant_emotion']}"
 
 @app.route("/")
 def html_index_page():

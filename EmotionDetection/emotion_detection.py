@@ -17,7 +17,6 @@ def emotion_detector(text_to_analyse):
 
     elif response.status_code == 400:
         print("No whitespaces allowed")
-        return {'anger': None, 'disgust': None, 'fear': None,
-                'joy': None, 'sadness': None,'dominant_emotion': None}
+        return {'anger': None, 'disgust': None, 'fear': None,'joy': None, 'sadness': None,'dominant_emotion': None}
 
                 
