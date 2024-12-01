@@ -1,6 +1,16 @@
 import requests
 
 def emotion_detector(text_to_analyze):
+    if not text_to_analyze:
+        return {
+            'anger': None,
+            'disgust': None,
+            'fear': None,
+            'joy': None,
+            'sadness': None,
+            'dominant_emotion': None
+        }
+
     url = 'https://sn-watson-emotion.labs.skills.network/v1/watson.runtime.nlp.v1/NlpService/EmotionPredict'
     
     headers = {
@@ -35,15 +45,16 @@ def emotion_detector(text_to_analyze):
                 'sadness': sadness_score
             }
 
-            dominant_emotion = max(emotion_output, key=emotion_output.get)
+            dominant_emotion = max(emotion_output, key=emotion_output.get, default=None)
 
             emotion_output['dominant_emotion'] = dominant_emotion
 
+            if dominant_emotion is None:
+                return {"error": "Invalid text! Please try again!"}
+
             return emotion_output
         else:
-            return f"Error: Received status code {response.status_code}, Message: {response.text}"
+            return {"error": f"Error: Received status code {response.status_code}, Message: {response.text}"}
 
     except requests.exceptions.RequestException as e:
-        return f"Error: Failed to connect to the API. {e}"
-
-
+        return {"error": f"Error: Failed to connect to the API. {e}"}
