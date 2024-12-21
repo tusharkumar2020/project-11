@@ -1,4 +1,9 @@
+"""
+Modulo deteccion de emociones.
+"""
+
 import requests  # Importar la biblioteca requests para manejar solicitudes HTTP
+
 def emotion_detector(text_to_analyse):  # Definir una función llamada emotion_detector que toma una cadena como entrada (text_to_analyse)
     url = 'https://sn-watson-emotion.labs.skills.network/v1/watson.runtime.nlp.v1/NlpService/EmotionPredict'
     header = {"grpc-metadata-mm-model-id": "emotion_aggregated-workflow_lang_en_stock"}
