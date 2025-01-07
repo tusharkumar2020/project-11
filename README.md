@@ -17,13 +17,10 @@ A lightweight Flask-based web application that analyzes user-provided text to de
    cd emotion-detection-flask
    ```
 2. Install dependencies:
-  ```bash
-  pip install -r requirements.txt
-  ```
   
 3. Start the Flask server:
    ```bash
-     python3 server.py
+     python3.11 server.py
    ```
    
 4. Access the application in your browser:  
