@@ -13,31 +13,31 @@ A lightweight Flask-based web application that analyzes user-provided text to de
 
 1. Clone the repository:
    ```bash
-   git clone 
+   git clone  https://github.com/athrocks/Emotion-Detection-Flask-Application/
    cd emotion-detection-flask
    ```
 2. Install dependencies:
-
   ```bash
   pip install -r requirements.txt
   ```
   
 3. Start the Flask server:
-```bash
-  python3 server.py
-```
-4. Access the application in your browser:
-Visit http://127.0.0.1:5005.
+   ```bash
+     python3 server.py
+   ```
+   
+4. Access the application in your browser:  
+   Visit http://127.0.0.1:5005.
 
 
 #### Response
-```
-{
-  "anger": 0.0136,
-  "disgust": 0.0017,
-  "fear": 0.0089,
-  "joy": 0.9719,
-  "sadness": 0.0552,
-  "dominant_emotion": "joy"
-}
-```
+   ```
+   {
+     "anger": 0.0136,
+     "disgust": 0.0017,
+     "fear": 0.0089,
+     "joy": 0.9719,
+     "sadness": 0.0552,
+     "dominant_emotion": "joy"
+   }
+   ```
