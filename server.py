@@ -16,7 +16,7 @@ def sent_detector():
     dominant_emotion = response['dominant_emotion']
 
     if dominant_emotion is None:
-        return jsonify({"message": "Invalid text! Please try again!"}), 400
+        return {"message": "Invalid text! Please try again!"}
     else:
         return (
             f"For the given statement, the system response is:"
@@ -30,4 +30,4 @@ def render_index_page():
     return render_template('index.html')
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5003)
+    app.run(host="0.0.0.0", port=5005)
