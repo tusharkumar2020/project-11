@@ -1,4 +1,8 @@
-"""NO TERMINAL: from emotion_detection import emotion_detector"""
+"""
+NO TERMINAL: from emotion_detection import emotion_detector
+
+
+"""
 import requests, json
 
 def emotion_detector(text_to_analyze):
