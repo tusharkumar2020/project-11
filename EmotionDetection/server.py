@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify
-from emotion_detection import emotion_detector
+from EmotionDetection.emotion_detection import emotion_detector
 
 app = Flask(__name__)
 
@@ -9,12 +9,15 @@ def emotion_detector_api():
     data = request.get_json()
     text_to_analyze = data.get('text')
 
-    if not text_to_analyze:
-        return jsonify({"error": "No text provided"}), 400
-
     # Processa o texto usando a função emotion_detector
     result = emotion_detector(text_to_analyze)
 
+    if result["dominant_emotion"] is None:
+        return jsonify({"error": "Invalid text! Please try again!"}), 400
+
+    if not text_to_analyze:
+        return jsonify({"error": "No text provided"}), 400
+    
     # Formata a resposta como uma string no formato solicitado
     response_text = (
         f"For the given statement, the system response is "
