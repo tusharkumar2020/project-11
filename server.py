@@ -9,10 +9,28 @@ app = Flask("Emotion Detector")
 @app.route('/emotionDetector', methods=['GET'])
 def detect_emotion():
     # Endpoint to analyse the emotions of the given text.
-    text_to_analyse = request.args.get('textToAnalyze') 
+    text_to_analyse = request.args.get('textToAnalyze')
 
+    if not text_to_analyse:  # if NO text, return status 400 with None to all fields.
+        response_none_data = {
+            "anger": None,
+            "disgust": None,
+            "fear": None,
+            "joy": None,
+            "sadness": None,
+            "dominant_emotion": None
+        }
+        # Bad Request
+        app.logger.warning('GET/ emotionDetector?textToAnalyze= HTTP/1.1 400 - Bad Request') 
+
+        return jsonify(response_none_data)
+          
     # Call the emotion_detector function
     response = emotion_detector(text_to_analyse) 
+
+    # Give error if there is problem with API !
+    if "error" in response: 
+	    return jsonify(emotion_result), 500 
 
     formatted_response = ( 
         f"For the given statement, the system response is " f"'anger': {response['anger']}, "
@@ -31,4 +49,7 @@ def render_index_page():
 
 if __name__ == '__main__': 
     app.run(host="0.0.0.0", port=5000, debug=True)
-           
+    
+
+
+   
