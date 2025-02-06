@@ -1,16 +1,39 @@
 import requests
+import json
 
-def emotion_detector(text_to_analyse):  
-    url = 'https://sn-watson-emotion.labs.skills.network/v1/watson.runtime.nlp.v1/NlpService/EmotionPredict'  # URL of the sentiment analysis service
-    myobj = { "raw_document": { "text": text_to_analyse } }  # Create a dictionary with the text to be analyzed
-    header = {"grpc-metadata-mm-model-id": "emotion_aggregated-workflow_lang_en_stock"}  # Set the headers required for the API request
-    response = requests.post(url, json = myobj, headers=header)  # Send a POST request to the API with the text and headers
-    return response.text  # Return the response text from the API
+def emotion_detector(text_to_analyse):
+    url = 'https://sn-watson-emotion.labs.skills.network/v1/watson.runtime.nlp.v1/NlpService/EmotionPredict'
+    headers = {"grpc-metadata-mm-model-id": "emotion_aggregated-workflow_lang_en_stock"}
+    myobj = {"raw_document": { "text": text_to_analyse }}
 
+    try:
+        response = requests.post(url, json=myobj, headers=headers)
+        response.raise_for_status()  # Lanza una excepción para errores HTTP
+        res = response.json()  # Parsea directamente el JSON de la respuesta
+        
+        # Extraer emociones relevantes
+        emotions = res.get('emotionPredictions', [{}])[0].get('emotion', {})
+        extracted_emotions = {
+            'anger': emotions.get('anger', 0),
+            'disgust': emotions.get('disgust', 0),
+            'fear': emotions.get('fear', 0),
+            'joy': emotions.get('joy', 0),
+            'sadness': emotions.get('sadness', 0)
+        }
 
-# Test function
-text = "I love this new technology."
-print(emotion_detector(text))
+        # Determinar la emoción dominante
+        dominant_emotion = max(extracted_emotions, key=extracted_emotions.get)
+        extracted_emotions['dominant_emotion'] = dominant_emotion
+
+        return extracted_emotions
+
+    except requests.exceptions.RequestException as e:
+        return {"error": f"Request failed: {e}"}
+
+# Ejemplo de uso
+text = "I am extremely happy today!"
+result = emotion_detector(text)
+print(result)
 
 
 
