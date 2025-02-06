@@ -22,9 +22,10 @@ def detect_emotion():
         }
         # Bad Request
         app.logger.warning('GET/ emotionDetector?textToAnalyze= HTTP/1.1 400 - Bad Request') 
+        
+        if response_none_data['dominant_emotion'] is None:
+            return "Invalid text! Please try again." 
 
-        return jsonify(response_none_data)
-          
     # Call the emotion_detector function
     response = emotion_detector(text_to_analyse) 
 
