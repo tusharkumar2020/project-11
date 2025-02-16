@@ -32,5 +32,5 @@ def emotion_detector(text_to_analyze):
         return f"Error: {response.status_code}"
 
 
-# Example usage (no changes needed here):
+
 
