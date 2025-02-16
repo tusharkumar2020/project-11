@@ -13,11 +13,13 @@ def emotion_detector(text_to_analyze):
             json_response = response.json()
             emotions = json_response['emotionPredictions'][0]['emotionMentions'][0]['emotion']
             dominant_emotion = max(emotions, key=emotions.get, default=None)
-            emotion = {
+            emotion_response = {
                 **emotions,
-                'dominant_emotion' : dominant_emotion
+                'dominant_emotion': dominant_emotion
             }
-            return emotion
+            json_string = json.dumps(emotion_response, indent=4)  
+            print(json_string)
+            return json_string
 
         except (KeyError, IndexError) as e:
             print(f"Error extracting text from JSON: {e}")
@@ -28,3 +30,7 @@ def emotion_detector(text_to_analyze):
         print(f"Error: {response.status_code}")
         print(response.text)
         return f"Error: {response.status_code}"
+
+
+# Example usage (no changes needed here):
+
