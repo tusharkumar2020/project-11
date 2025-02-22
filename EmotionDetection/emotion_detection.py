@@ -2,7 +2,17 @@ import requests
 import json
 
 def emotion_detector(text_to_analyze):
-    """Function to analyze emotions in text using Watson NLP and format the output"""
+    """Function to analyze emotions in text using Watson NLP and handle errors properly."""
+    
+    if not text_to_analyze.strip():  # Check if input is empty or contains only spaces
+        return {
+            'anger': None,
+            'disgust': None,
+            'fear': None,
+            'joy': None,
+            'sadness': None,
+            'dominant_emotion': None
+        }
     
     url = "https://sn-watson-emotion.labs.skills.network/v1/watson.runtime.nlp.v1/NlpService/EmotionPredict"
     headers = {"grpc-metadata-mm-model-id": "emotion_aggregated-workflow_lang_en_stock"}
@@ -11,10 +21,17 @@ def emotion_detector(text_to_analyze):
     response = requests.post(url, json=payload, headers=headers)
     
     if response.status_code == 200:
-        formatted_response = json.loads(response.text)  # Ensure JSON parsing using json library
+        formatted_response = json.loads(response.text)
         
         if 'emotionPredictions' not in formatted_response:
-            return {"error": "No emotions detected in the response."}
+            return {
+                'anger': None,
+                'disgust': None,
+                'fear': None,
+                'joy': None,
+                'sadness': None,
+                'dominant_emotion': None
+            }
         
         emotions = formatted_response['emotionPredictions'][0]['emotion']
         
@@ -26,11 +43,22 @@ def emotion_detector(text_to_analyze):
             'sadness': emotions.get('sadness', 0),
             'dominant_emotion': max(emotions, key=emotions.get)
         }
+    
+    elif response.status_code == 400:  # Handle bad request errors
+        return {
+            'anger': None,
+            'disgust': None,
+            'fear': None,
+            'joy': None,
+            'sadness': None,
+            'dominant_emotion': None
+        }
+    
     else:
         return {"error": f"Request failed with status code {response.status_code}"}
 
 # Example usage
 if __name__ == "__main__":
-    text = "I am so happy I am doing this."
+    text = " "
     result = emotion_detector(text)
     print(result)
