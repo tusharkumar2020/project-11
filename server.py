@@ -1,3 +1,4 @@
+""" imports flask and other methods"""
 from flask import Flask, render_template, request
 from EmotionDetection.emotion_detection import emotion_detector
 
@@ -5,22 +6,26 @@ app = Flask("Emotion Detector")
 
 @app.route("/emotionDetector")
 def sent_detector():
+    """generate a response message given input"""
 
     text_to_analyze = request.args.get('textToAnalyze')
     response = emotion_detector(text_to_analyze)
 
+    anger = response['anger']
+    disgust = response['disgust']
+    fear = response['fear']
+    joy = response['joy']
+    sadness = response['sadness']
+    dominant_emotion = response['dominant_emotion']
 
-    anger = response[0]
-    disgust = response[1]
-    fear = response[2]
-    joy = response[3]
-    sadness = response[4]
-    dominant_emotion = response[5]
+    if dominant_emotion is None:
+        return "Invalid text! Please try again!"
+    return "For the given statement, the system response is 'anger': {}, 'disgust': {}, 'fear': {}, 'joy': {}, and 'sadness': {}. The dominant emotion is {}.".format(anger, disgust, fear, joy, sadness, dominant_emotion) # pylint: disable=line-too-long # pylint: disable=consider-using-f-string
 
-    return "For the given statement, the system response is {}, {}, {}, {}, and {}. The dominant emotion is {}.".format(anger, disgust, fear, joy, sadness, dominant_emotion)
 
 @app.route("/")
 def render_index_page():
+    """render page"""
     return render_template('index.html')
 
 if __name__ == "__main__":
