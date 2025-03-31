@@ -1,3 +1,7 @@
+"""
+Flask application for emotion detection.
+"""
+
 from flask import Flask, jsonify, render_template, request
 
 from EmotionDetection import emotion_detector
@@ -7,11 +11,18 @@ app = Flask(__name__)
 
 @app.route("/")
 def index():
+    """Renders the index.html template."""
     return render_template("index.html")
 
 
 @app.route("/emotionDetector", methods=["POST"])
 def emotion_detector_endpoint():
+    """
+    Handles emotion detection requests and returns the result.
+
+    Returns:
+        str: The emotion detection result as a string.
+    """
     text_to_analyze = request.form["text"]
     result = emotion_detector(text_to_analyze)
 
