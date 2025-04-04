@@ -13,10 +13,14 @@ def emotion_analysis():
     # Accept query parameter for GET
     if request.method == "GET":
         text = request.args.get("textToAnalyze")
-    else:  # for POST (not needed by your frontend, but nice to have)
+    else:  # for POST (not used by your frontend, but nice to have)
         text = request.form["text"]
 
     result = emotion_detector(text)
+
+    # Error handling for invalid/blank input
+    if result["dominant_emotion"] is None:
+        return "Invalid text! Please try again!"
 
     response = (
         f"For the given statement, the system response is "
@@ -29,8 +33,6 @@ def emotion_analysis():
     )
 
     return response
-
-
 
 
 if __name__ == "__main__":
