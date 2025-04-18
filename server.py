@@ -1,3 +1,4 @@
+"""This module defines the Flask server for the emotion detection application."""
 from flask import Flask, render_template, request, jsonify
 from EmotionDetection.emotion_detection import emotion_detector
 
@@ -5,7 +6,7 @@ app = Flask(__name__)
 
 @app.route("/emotionDetector")
 def emotion_analyzer():
-
+"""Handles requests to the /emotionDetector endpoint to analyze text and return emotion results."""
     text_to_analyze = request.args.get('textToAnalyze')
     emotion_result = emotion_detector(text_to_analyze)
     
@@ -28,6 +29,7 @@ def emotion_analyzer():
 
 @app.route("/")
 def render_index_page():
+    """Renders the index.html page."""
     return render_template('index.html')
 
 if __name__ == "__main__":
